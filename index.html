@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Nuestra Boda — Tiziano & Kiara</title>
+
+  <!-- Metatags para vista previa en WhatsApp y Redes Sociales -->
+  <meta property="og:title" content="Nuestra Boda — Tiziano & Kiara 💍✨">
+  <meta property="og:description" content="¡Nos casamos! Estás invitado a celebrar este día tan especial con nosotros.">
+  <meta property="og:type" content="website">
+
+  <!-- Fuentes elegantes de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Iconos Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Canvas para destellos o pétalos flotantes -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- PANTALLA DE APERTURA / SOBRE (Garantiza reproducción de audio en todos los celulares) -->
+  <div id="welcome-overlay" class="welcome-overlay">
+    <div class="envelope-card">
+      <div class="monogram-badge">
+        <span class="monogram-letters">T & K</span>
+      </div>
+      <p class="envelope-eyebrow">NUESTRA BODA</p>
+      <h1 class="envelope-names">Tiziano & Kiara</h1>
+      <div class="wax-seal-wrapper">
+        <button id="btn-enter" class="wax-seal-btn" title="Abrir Invitación" aria-label="Abrir Invitación">
+          <div class="seal-inner">
+            <i class="fa-solid fa-heart seal-icon"></i>
+            <span class="seal-text">ABRIR</span>
+          </div>
+        </button>
+      </div>
+      <p class="envelope-hint">Hacé clic para abrir la invitación<br><span class="sound-subhint"><i class="fa-solid fa-volume-high"></i> Con música incluida</span></p>
+    </div>
+  </div>
+
+  <!-- CONTROL FLOTANTE DE MÚSICA -->
+  <div class="music-controller" id="music-controller">
+    <button id="btn-music-toggle" class="btn-music" title="Pausar / Reproducir música" aria-label="Control de música">
+      <div class="equalizer-bars" id="equalizer">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <i class="fa-solid fa-music music-icon"></i>
+    </button>
+    <div class="music-tooltip" id="music-tooltip">Coldplay - A Sky Full of Stars</div>
+  </div>
+
+  <!-- ELEMENTO DE AUDIO DE LA BODA -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="Coldplay - A Sky Full of Stars.mp3" type="audio/mpeg">
+    Tu navegador no soporta reproducción de audio.
+  </audio>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="invitation-wrapper" id="main-content">
+
+    <!-- PORTADA / HERO -->
+    <header class="section hero-section">
+      <div class="ornament-top">
+        <svg viewBox="0 0 160 30" class="ornament-svg">
+          <path d="M10 15 Q 40 0, 80 15 T 150 15" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <circle cx="80" cy="15" r="3.5" fill="currentColor"/>
+          <circle cx="68" cy="15" r="1.5" fill="currentColor"/>
+          <circle cx="92" cy="15" r="1.5" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <div class="hero-monogram">T & K</div>
+      <p class="hero-eyebrow">¡NOS CASAMOS!</p>
+      <h1 class="hero-title">Tiziano & Kiara</h1>
+      
+      <p class="hero-phrase">
+        «Hay momentos en la vida que son inolvidables, y compartirlos con las personas que más queremos los hace eternos.»
+      </p>
+
+      <div class="hero-divider">
+        <span class="leaf-icon">❧</span>
+        <span class="ring-icon"><i class="fa-solid fa-ring"></i></span>
+        <span class="leaf-icon">☙</span>
+      </div>
+
+      <!-- TARJETA DE FECHA DESTACADA -->
+      <div class="date-hero-card">
+        <div class="date-weekday" id="display-weekday">LUNES</div>
+        <div class="date-main-number" id="display-day">30</div>
+        <div class="date-month-year" id="display-month-year">NOVIEMBRE · 2026</div>
+      </div>
+    </header>
+
+    <!-- CUENTA REGRESIVA -->
+    <section class="section countdown-section reveal">
+      <h2 class="section-title-script">Falta muy poco</h2>
+      <p class="section-subtitle">CONTANDO CADA SEGUNDO PARA EL GRAN DÍA</p>
+
+      <div class="countdown-grid" id="countdown-timer">
+        <div class="time-box">
+          <span class="time-num" id="days">00</span>
+          <span class="time-label">DÍAS</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-box">
+          <span class="time-num" id="hours">00</span>
+          <span class="time-label">HORAS</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-box">
+          <span class="time-num" id="minutes">00</span>
+          <span class="time-label">MINUTOS</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-box">
+          <span class="time-num" id="seconds">00</span>
+          <span class="time-label">SEGUNDOS</span>
+        </div>
+      </div>
+
+      <div class="calendar-action">
+        <button id="btn-add-calendar" class="btn-outline-gold">
+          <i class="fa-regular fa-calendar-plus"></i> Agendar en mi Calendario
+        </button>
+      </div>
+    </section>
+
+    <!-- EVENTOS: CEREMONIA Y FIESTA -->
+    <section class="section events-section reveal">
+      <h2 class="section-title-script">Dónde y Cuándo</h2>
+      <p class="section-subtitle">ITINERARIO DE NUESTRA BODA</p>
+
+      <div class="events-grid">
+        
+        <!-- CEREMONIA -->
+        <article class="event-card">
+          <div class="event-icon-circle">
+            <i class="fa-solid fa-church"></i>
+          </div>
+          <h3 class="event-type">Ceremonia</h3>
+          <h4 class="event-venue" id="ceremony-venue">Parroquia Nuestra Señora del Carmen</h4>
+          <p class="event-time" id="ceremony-time">
+            <i class="fa-regular fa-clock"></i> 20:00 HS
+          </p>
+          <p class="event-address" id="ceremony-address">
+            <i class="fa-solid fa-location-dot"></i> 9 de Julio 276, San Martín, Mendoza
+          </p>
+          <div class="event-btn-wrap">
+            <a id="btn-ceremony-map" href="https://www.google.com/maps/search/?api=1&query=Parroquia+Nuestra+Señora+del+Carmen+9+de+Julio+276+San+Martin+Mendoza" target="_blank" rel="noopener noreferrer" class="btn-card-gold">
+              <i class="fa-solid fa-map-location-dot"></i> Cómo Llegar
+            </a>
+          </div>
+        </article>
+
+        <!-- FIESTA -->
+        <article class="event-card">
+          <div class="event-icon-circle">
+            <i class="fa-solid fa-champagne-glasses"></i>
+          </div>
+          <h3 class="event-type">Fiesta</h3>
+          <h4 class="event-venue" id="party-venue">Acacias Multieventos</h4>
+          <p class="event-time" id="party-time">
+            <i class="fa-regular fa-clock"></i> 21:30 HS (A continuación)
+          </p>
+          <p class="event-address" id="party-address">
+            <i class="fa-solid fa-location-dot"></i> Carril Norte s/n (e/ Carril Montecaseros), Buen Orden, San Martín, Mendoza
+          </p>
+          
+          <div class="parking-badge">
+            <i class="fa-solid fa-square-parking"></i> Estacionamiento Privado
+          </div>
+
+          <div class="event-btn-wrap">
+            <a id="btn-party-map" href="https://www.google.com/maps/search/?api=1&query=Acacias+Multieventos+San+Martin+Mendoza" target="_blank" rel="noopener noreferrer" class="btn-card-gold">
+              <i class="fa-solid fa-map-location-dot"></i> Cómo Llegar
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CÓDIGO DE VESTIMENTA -->
+    <section class="section dresscode-section reveal">
+      <div class="elegant-card">
+        <div class="card-icon-header">
+          <i class="fa-solid fa-vest-patches"></i>
+        </div>
+        <h2 class="section-title-script">Dress Code</h2>
+        <h3 class="dresscode-title" id="dresscode-style">Elegante</h3>
+        <p class="dresscode-desc" id="dresscode-desc">
+          Queremos que te sientas cómodo/a y radiante para celebrar y bailar con nosotros.
+        </p>
+        <div class="dresscode-badge">
+          <i class="fa-solid fa-circle-info"></i>
+          <span id="dresscode-note">Color blanco reservado exclusivamente para la novia.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIRMACIÓN DE ASISTENCIA (RSVP) -->
+    <section class="section rsvp-section reveal">
+      <div class="rsvp-card">
+        <div class="card-icon-header">
+          <i class="fa-solid fa-envelope-circle-check"></i>
+        </div>
+        <h2 class="section-title-script">Confirmación de Asistencia</h2>
+        <p class="rsvp-subtext">
+          Tu presencia es el regalo más valioso para nosotros en este día tan soñado.<br>
+          Por favor completá el formulario para confirmar tu lugar e indicarnos especificaciones del menú.
+        </p>
+        <p class="rsvp-deadline" id="rsvp-deadline">
+          <i class="fa-regular fa-calendar-check"></i> Por favor confirmar antes del <strong>24 de Noviembre de 2026</strong>
+        </p>
+        
+        <div class="rsvp-buttons">
+          <a id="btn-rsvp-link" href="https://forms.gle/QVqx4ek6T9vk6M8d7" target="_blank" rel="noopener noreferrer" class="btn-gold-primary">
+            <i class="fa-solid fa-clipboard-check"></i> Confirmar en el Formulario
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGALOS / ALIAS Y CUENTA -->
+    <section class="section gift-section reveal">
+      <div class="gift-card">
+        <div class="card-icon-header">
+          <i class="fa-solid fa-gift"></i>
+        </div>
+        <h2 class="section-title-script">Mesa de Regalos</h2>
+        <p class="gift-text">
+          Nuestro mejor regalo es compartir este momento único con vos. Pero si deseás hacernos un presente o colaborar con nuestra luna de miel, podés hacerlo a través de nuestra cuenta:
+        </p>
+
+        <div class="bank-details-box">
+          <div class="bank-item">
+            <span class="bank-label">ALIAS:</span>
+            <div class="copyable-row">
+              <span class="bank-value" id="alias-value">kiara.tizi.boda</span>
+              <button id="btn-copy-alias" class="btn-copy" title="Copiar Alias" aria-label="Copiar Alias">
+                <i class="fa-regular fa-copy"></i>
+                <span id="copy-alias-label">Copiar</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="bank-item bank-item-extra" id="bank-holder-wrap">
+            <span class="bank-label">TITULARES:</span>
+            <span class="bank-plain" id="bank-holder">Tiziano & Kiara</span>
+          </div>
+        </div>
+
+        <div id="copy-toast" class="copy-toast">¡Alias copiado al portapapeles! ✨</div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN SPOTIFY PLAYLIST -->
+    <section class="section spotify-section reveal">
+      <div class="spotify-card">
+        <div class="spotify-header">
+          <div class="spotify-brand-icon">
+            <i class="fa-brands fa-spotify"></i>
+          </div>
+          <div>
+            <h2 class="section-title-script">Playlist de la Fiesta</h2>
+            <p class="section-subtitle">¡ARMEMOS JUNTOS LA MÚSICA!</p>
+          </div>
+        </div>
+        <p class="spotify-desc">
+          ¡Queremos que la fiesta sea inolvidable y la pista no pare nunca! Entrá a nuestra playlist oficial de Spotify y agregá los temas que no pueden faltar.
+        </p>
+        <div class="spotify-action">
+          <a id="btn-spotify" href="https://open.spotify.com/playlist/1KyTA7UHCkBmMSjdYw7jZi?si=Z83s9wfxQy-Ls1eCG9WtAg&utm_source=copy-link&pi=KgLjugJuRaa1c" 
+             target="_blank" rel="noopener noreferrer" class="btn-spotify">
+            <i class="fa-brands fa-spotify"></i> Abrir Playlist en Spotify
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="footer-section">
+      <div class="footer-ornament">
+        <span>✦</span> ❧ <span>✦</span>
+      </div>
+      <p class="footer-thanks">¡Gracias por ser parte de nuestra historia de amor!</p>
+      <h2 class="footer-couple-names">Tiziano & Kiara</h2>
+      <p class="footer-brand">Invitaciones AUREA ✨</p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
